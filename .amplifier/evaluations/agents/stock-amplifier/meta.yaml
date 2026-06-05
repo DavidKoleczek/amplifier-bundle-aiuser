@@ -1,0 +1,7 @@
+name: stock-amplifier
+description: >
+  A stock Amplifier CLI agent with amplifier-foundation composed (bash,
+  filesystem, web). This is NOT the thing under test -- it is the lower-level
+  AI session that the standalone AIUser drives. A trivially-capable coding
+  agent on purpose, so that what we measure is the AIUser's driving behavior,
+  not the agent's ability.

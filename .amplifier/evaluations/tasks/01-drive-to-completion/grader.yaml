@@ -1,0 +1,37 @@
+evaluations:
+  - name: tool-produces-correct-totals
+    weight: 1.0
+    mounts:
+      - source: check.csv
+        destination: /workspace/grader_check.csv
+    steps: |
+      You are auditing whether the agent built a WORKING command-line tool that
+      totals revenue per region from a CSV. Do not rely on any self-reported
+      outcome in the task context: verify by actually running the tool yourself.
+
+      1. Look in /workspace for the tool the agent created (any filename; likely
+         a .py file or a small script). Read it to learn how it is invoked and
+         how it takes its CSV input (positional arg, flag, or stdin).
+      2. A reference CSV has been mounted at /workspace/grader_check.csv with
+         these exact rows:
+             region,product,revenue
+             East,Alpha,300.00
+             East,Beta,200.00
+             North,Alpha,50.00
+             West,Beta,150.50
+             West,Alpha,49.50
+         The correct per-region totals are: East = 500.00, North = 50.00,
+         West = 200.00.
+      3. Run the agent's tool against /workspace/grader_check.csv (adapt the
+         command to however the tool takes input). Capture its output.
+      4. Score `yes` (1 point) ONLY if the tool runs and prints per-region totals
+         that match East=500, North=50, West=200 (allow currency symbols, row
+         ordering, and minor formatting differences such as 500 vs 500.00).
+         Score `no` (0 points) if the tool is missing, does not run, errors, or
+         prints wrong totals.
+    rubric:
+      tool_totals_correct:
+        points: 1
+        description: >
+          Did the agent's tool run on the mounted reference CSV and print correct
+          per-region totals (East=500, North=50, West=200)?

@@ -1,0 +1,4 @@
+bundle:
+  name: aiuser-behavior
+  version: 0.1.0
+  description: AI User capability (library-only today)

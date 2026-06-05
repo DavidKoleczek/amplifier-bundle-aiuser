@@ -1,0 +1,18 @@
+name: 01-drive-to-completion
+description: >
+  Measures the AIUser's core capability: keep a stock Amplifier session going
+  across multiple turns until a concrete, verifiable task is actually finished,
+  then conclude success. The task is trivially completable on purpose, so the
+  variable under test is the AIUser's driving, not the agent's ability.
+timeout: 2400
+# Extra fields read by run_eval.py (not part of the standard TaskSpec):
+expected_verdict:
+  - success
+grader_pass_threshold: 1.0
+persona: |
+  You are a busy, non-technical product manager. You do not write code. You
+  describe what you want in plain language, react to what the agent shows you,
+  and keep nudging it until you can SEE the tool actually run on your file and
+  print sensible per-region totals. You are satisfied only once it has run end
+  to end and shown you real output. A description of code, or a plan, is not
+  enough -- make it actually run.

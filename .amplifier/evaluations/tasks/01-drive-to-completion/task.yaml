@@ -1,0 +1,5 @@
+instructions: |
+  I have a CSV of sales at /workspace/sales.csv. I need a small command-line
+  tool that reads it and prints the total revenue for each region. Build the
+  tool, run it on my file, and show me the per-region totals so I can see it
+  actually works.

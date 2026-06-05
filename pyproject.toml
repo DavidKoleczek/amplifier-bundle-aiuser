@@ -1,0 +1,46 @@
+[project]
+name = "amplifier-bundle-aiuser"
+version = "0.1.0"
+description = "A reusable AI User: a layer between human intent (persona + task) and a continuing lower-level AI session."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Microsoft MADE:Explorations Team" }]
+keywords = ["amplifier", "ai-user", "agents", "evaluation"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+    "amplifier-core",
+    "amplifier-foundation",
+]
+
+[dependency-groups]
+dev = [
+    "ruff",
+    "pyright",
+    # Eval-only: reuse the harness building blocks (DTU, install, Grader) and the
+    # amplifier-digital-twin CLI to drive the standalone AIUser under test.
+    "amplifier-bundle-evaluation",
+    "amplifier-bundle-digital-twin-universe",
+]
+
+[tool.uv.sources]
+amplifier-core = { path = "../amplifier-core", editable = true }
+amplifier-foundation = { path = "../amplifier-foundation", editable = true }
+amplifier-bundle-evaluation = { path = "../amplifier-bundle-evaluation", editable = true }
+amplifier-bundle-digital-twin-universe = { path = "../amplifier-bundle-digital-twin-universe", editable = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/amplifier_aiuser"]

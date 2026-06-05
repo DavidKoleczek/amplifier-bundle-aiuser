@@ -1,0 +1,28 @@
+name: aiuser-eval-stock-amplifier
+description: >
+  Ubuntu 24.04 with uv, git, and tmux. A stock Amplifier agent (foundation
+  composed) is installed by the agent's install.yaml and driven by the
+  standalone AIUser under test. The scenario's seed files are staged into
+  /workspace by the runner before the agent runs. Outbound network is allowed
+  so the agent can install from GitHub and reach the Anthropic API.
+
+base:
+  image: ubuntu:24.04
+
+passthrough:
+  allow_external: true
+  services:
+    - name: anthropic
+      key_env: ANTHROPIC_API_KEY
+
+provision:
+  setup_cmds:
+    - apt-get update && apt-get install -y --no-install-recommends git curl ca-certificates tmux && rm -rf /var/lib/apt/lists/*
+    - curl -LsSf https://astral.sh/uv/install.sh | sh
+    - mkdir -p /workspace
+
+readiness:
+  - name: uv-installed
+    command: "PATH=/root/.local/bin:$PATH uv --version"
+  - name: workspace-exists
+    command: "test -d /workspace && echo OK"

@@ -1,0 +1,29 @@
+# Setup commands the runner executes inside the task DTU to install the
+# lower-level agent. Each command runs via `bash -lc` after the profile has
+# provisioned the OS (uv on PATH) and readiness checks have passed.
+#
+# This is a STOCK Amplifier session: amplifier + a provider + amplifier-foundation
+# composed onto every session (foundation supplies bash/filesystem/web). No
+# evaluation/DTU/gitea bundles -- this agent just does ordinary coding work when
+# driven, so the variable under test is the AIUser, not the agent.
+
+requires:
+  env:
+    - ANTHROPIC_API_KEY
+
+setup_cmds:
+  - uv tool install -vv git+https://github.com/microsoft/amplifier
+  - |
+    mkdir -p /root/.amplifier
+    cat > /root/.amplifier/settings.yaml << EOF
+    config:
+      providers:
+        - module: provider-anthropic
+          source: git+https://github.com/microsoft/amplifier-module-provider-anthropic@main
+          config:
+            api_key: $ANTHROPIC_API_KEY
+    EOF
+  - amplifier bundle add git+https://github.com/microsoft/amplifier-foundation@main --app
+  - amplifier --version
+  - amplifier bundle list | tee /tmp/bundle-list.txt
+  - grep -qi foundation /tmp/bundle-list.txt
