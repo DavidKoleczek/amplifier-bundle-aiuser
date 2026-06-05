@@ -9,10 +9,10 @@ persona, a scenario, and an invocation guide, it drives a lower-level AI session
 across multiple turns until the scenario is genuinely done or the session is
 broken, then reports a verdict.
 
-This started life inside `amplifier-bundle-evaluation`, where the AI User drives
-an agent-under-test. This bundle extracts it as a standalone library so other
-products (for example, pipeline nodes that need an autonomous "user") can import
-and drive it directly.
+It is designed to be embedded in other products: anywhere you need an autonomous
+stand-in for a human user to keep a lower-level session moving. For example, a
+pipeline node that drives an agent toward a goal, or automated exercising of an
+agent that expects a real user at the other end. Import it and drive it directly.
 
 ## Install
 
